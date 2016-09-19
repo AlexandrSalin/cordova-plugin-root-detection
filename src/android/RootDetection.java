@@ -44,6 +44,7 @@ public class RootDetection extends CordovaPlugin {
                             activity.finish();
                         }
                     })
+                    .setCancelable(false)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
         }
