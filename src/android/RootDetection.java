@@ -10,6 +10,10 @@ import org.json.JSONObject;
 import java.lang.Exception;
 import java.io.File;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+
 /**
  * Detect weather device is rooted or not
  * @author trykov
