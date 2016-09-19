@@ -29,20 +29,35 @@ public class RootDetection extends CordovaPlugin {
         }
         return false;
     }
+    
+    public static void rootCheck(final Activity activity) {
+        if (isDeviceRooted()) {
+            new AlertDialog.Builder(activity)
+                    .setTitle("Root detected")
+                    .setMessage("Please launch app on device without root access.")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            activity.finish();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+    }
 
-    private boolean isDeviceRooted() {
+    private static boolean isDeviceRooted() {
         return checkBuildTags() || checkSuperUserApk() || checkFilePath();
     }
-    private boolean checkBuildTags() {
+    private static boolean checkBuildTags() {
         String buildTags = android.os.Build.TAGS;
         return buildTags != null && buildTags.contains("test-keys");
     }
 
-    private boolean checkSuperUserApk() {
+    private static boolean checkSuperUserApk() {
         return new File("/system/app/Superuser.apk").exists();
     }
 
-    private boolean checkFilePath() {
+    private static boolean checkFilePath() {
         String[] paths = { "/sbin/su", "/system/bin/su", "/system/xbin/su", "/data/local/xbin/su", "/data/local/bin/su", "/system/sd/xbin/su",
                 "/system/bin/failsafe/su", "/data/local/su" };
         for (String path : paths) {
